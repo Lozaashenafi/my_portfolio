@@ -1,0 +1,155 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+model User {
+  id            String    @id @default(cuid()) @db.VarChar(191)
+  name          String    @db.VarChar(191)
+  email         String    @unique @db.VarChar(191)
+  emailVerified Boolean
+  image         String?   @db.Text
+  role          String?   @db.VarChar(191)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  sessions      Session[]
+  accounts      Account[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(cuid()) @db.VarChar(191)
+  expiresAt DateTime
+  token     String   @unique @db.VarChar(191)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?  @db.VarChar(191)
+  userAgent String?  @db.Text
+  userId    String   @db.VarChar(191)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(cuid()) @db.VarChar(191)
+  accountId             String    @db.VarChar(191) // Limited length
+  providerId            String    @db.VarChar(191) // Limited length
+  userId                String    @db.VarChar(191)
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?   @db.Text
+  refreshToken          String?   @db.Text
+  idToken               String?   @db.Text
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?   @db.Text
+  password              String?   @db.Text
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id @default(cuid()) @db.VarChar(191)
+  identifier String    @db.VarChar(191)
+  value      String    @db.VarChar(191)
+  expiresAt  DateTime
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  @@map("verification")
+}
+
+model Project {
+  id           String   @id @default(cuid()) @db.VarChar(191)
+  title        String   @db.VarChar(191)
+  slug         String   @unique @db.VarChar(191)
+  description  String   @db.Text
+  content      String?  @db.Text
+  coverImage   String?  @db.Text
+  githubUrl    String?  @db.Text
+  liveUrl      String?  @db.Text
+  featured     Boolean  @default(false)
+  published    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  categoryId   String?   @db.VarChar(191)
+  category     Category? @relation(fields: [categoryId], references: [id])
+  skills       SkillsOnProjects[] 
+}
+
+model Category {
+  id       String    @id @default(cuid()) @db.VarChar(191)
+  name     String    @unique @db.VarChar(191)
+  projects Project[]
+}
+
+model Skill {
+  id       String    @id @default(cuid()) @db.VarChar(191)
+  name     String    @unique @db.VarChar(191)
+  icon     String?   @db.VarChar(191)
+  level    Int?
+  projects SkillsOnProjects[]
+}
+
+// Explicit Join Table for many-to-many to avoid index length issues
+model SkillsOnProjects {
+  projectId String @db.VarChar(191)
+  skillId   String @db.VarChar(191)
+  project   Project @relation(fields: [projectId], references: [id])
+  skill     Skill   @relation(fields: [skillId], references: [id])
+
+  @@id([projectId, skillId])
+}
+
+model Experience {
+  id             String    @id @default(cuid()) @db.VarChar(191)
+  company        String    @db.VarChar(191)
+  role           String    @db.VarChar(191)
+  location       String?   @db.VarChar(191)
+  description    String    @db.Text
+  startDate      DateTime
+  endDate        DateTime?
+  current        Boolean   @default(false)
+  companyLogo    String?   @db.Text
+  companyWebsite String?   @db.Text
+  createdAt      DateTime  @default(now())
+}
+
+model BlogPost {
+  id        String   @id @default(cuid()) @db.VarChar(191)
+  title     String   @db.VarChar(191)
+  slug      String   @unique @db.VarChar(191)
+  excerpt   String   @db.Text
+  content   String   @db.Text
+  published Boolean  @default(false)
+  frontPage Boolean  @default(false)
+  hashtags  String?  @db.VarChar(191)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Cv {
+  id        String   @id @default(cuid()) @db.VarChar(191)
+  filePath  String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid()) @db.VarChar(191)
+  name      String   @db.Text
+  email     String   @db.Text
+  subject   String?  @db.Text
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
