@@ -48,7 +48,7 @@ const Header = () => {
           {/* 🌙 Dark Mode Toggle */}
           <button
             onClick={() => setTheme(isDark ? "light" : "dark")}
-            className="p-2 border border-light dark:border-gray-700 rounded-md hover:bg-light dark:hover:bg-dark-secondary transition"
+            className="text-dark-tertiary dark:text-soft-white"
             aria-label="Toggle theme"
           >
             {isDark ? <Sun size={20} /> : <Moon size={20} />}

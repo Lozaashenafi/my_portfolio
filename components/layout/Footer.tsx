@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Social Links */}
-        <div className="flex items-center gap-6 text-slate-400 dark:text-gray-500">
+        <div className="flex items-center gap-6 text-dark-tertiary dark:text-soft-white">
           <a
             href="#"
             className="hover:text-primary transition-colors"
@@ -38,7 +38,7 @@ const Footer: React.FC = () => {
           </a>
         </div>
 
-        <div className="flex items-center gap-2 font-mono text-sm text-dark-tertiary dark:text-gray-500">
+        <div className="flex items-center gap-2 font-mono text-sm text-dark-tertiary dark:text-soft-white">
           <span>© {currentYear}</span>
         </div>
       </div>

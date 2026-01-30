@@ -15,7 +15,7 @@ const ContactSection: React.FC = () => {
   return (
     <section
       id="contact"
-      className="bg-white dark:bg-dark-primary py-20 px-6 md:px-12 transition-colors duration-300"
+      className="bg-white dark:bg-dark-primary py-20 px-8 md:px-14 transition-colors duration-300"
     >
       <div className="max-w-7xl mx-auto">
         {/* Section Heading */}
@@ -46,7 +46,7 @@ const ContactSection: React.FC = () => {
                 value="hello@johndoe.dev"
               />
               <ContactInfoItem
-                icon={<Phone className="text--primary" size={24} />}
+                icon={<Phone className="text-primary" size={24} />}
                 label="Phone"
                 value="+1 (555) 123-4567"
               />
@@ -58,7 +58,7 @@ const ContactSection: React.FC = () => {
             </div>
 
             {/* Social & Resource Links */}
-            <div className="pt-8 space-y-4">
+            <div className="pt-8 space-y-4 ">
               <SocialLink
                 icon={<Download size={18} />}
                 text="Download Resume"
@@ -86,7 +86,7 @@ const ContactSection: React.FC = () => {
               <input
                 type="text"
                 placeholder="Your name"
-                className="w-full bg-slate-50 dark:bg-dark-secondary border border-slate-200 dark:border-dark-tertiary p-4 text-slate-900 dark:text-soft-white focus:border-primary outline-none transition-colors rounded-sm"
+                className="w-full bg-soft-white dark:bg-dark-secondary border border-slate-200 dark:border-dark-tertiary p-4 text-slate-900 dark:text-soft-white focus:border-primary outline-none transition-colors rounded-sm"
               />
             </div>
 
@@ -97,7 +97,7 @@ const ContactSection: React.FC = () => {
               <input
                 type="email"
                 placeholder="your@email.com"
-                className="w-full bg-slate-50 dark:bg-dark-secondary border border-slate-200 dark:border-dark-tertiary p-4 text-dark-tertiary dark:text-soft-white focus:border-primary outline-none transition-colors rounded-sm"
+                className="w-full bg-soft-white dark:bg-dark-secondary border border-slate-200 dark:border-dark-tertiary p-4 text-dark-tertiary dark:text-soft-white focus:border-primary outline-none transition-colors rounded-sm"
               />
             </div>
 
@@ -108,7 +108,7 @@ const ContactSection: React.FC = () => {
               <textarea
                 rows={5}
                 placeholder="Your message..."
-                className="w-full bg-slate-50 dark:bg-dark-secondary border border-slate-200 dark:border-dark-tertiary p-4 text-slate-900 dark:text-soft-white focus:border-primary outline-none transition-colors rounded-sm resize-none"
+                className="w-full bg-soft-white dark:bg-dark-secondary border border-slate-200 dark:border-dark-tertiary p-4 text-slate-900 dark:text-soft-white focus:border-primary outline-none transition-colors rounded-sm resize-none"
               ></textarea>
             </div>
 

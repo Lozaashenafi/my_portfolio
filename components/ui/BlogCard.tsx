@@ -19,7 +19,7 @@ interface BlogCardProps {
 const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
   return (
     <div
-      className={`h-full bg-slate-50 dark:bg-dark-secondary border border-slate-200 dark:border-dark-tertiary p-8 rounded-sm flex flex-col group hover:border-primary transition-all`}
+      className={`h-full bg-soft-white dark:bg-dark-secondary border border-slate-200 dark:border-dark-tertiary p-8 rounded-sm flex flex-col group hover:border-primary transition-all`}
     >
       {/* Post Metadata */}
       <div className="flex items-center gap-6 mb-6 text-xs font-mono text-slate-500 dark:text-gray-400">

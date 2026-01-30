@@ -4,7 +4,7 @@ import loza from "../../public/photo.png";
 
 const Banner = () => {
   return (
-    <section className="bg-light dark:bg-dark-primary min-h-screen flex flex-col items-center justify-center px-4 md:px-6 transition-colors duration-300 relative overflow-hidden py-20 md:py-0">
+    <section className="bg-light dark:bg-dark-primary min-h-screen flex flex-col items-center justify-center px-6 md:px-8 transition-colors duration-300 relative overflow-hidden py-20 md:py-0">
       <div className="max-w-7xl w-full flex flex-col-reverse md:flex-row items-center justify-between gap-10 md:mt-[-5vh]">
         {/* Text Content */}
         <div className="w-full md:w-3/5 text-center md:text-left z-10">
@@ -47,7 +47,7 @@ const Banner = () => {
 
         {/* Banner Image */}
         <div className="w-full md:w-2/5 flex justify-center relative">
-          <div className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-[400px] lg:h-[400px] rounded-full overflow-hidden border-4 border-white/10 dark:border-dark-secondary bg-light dark:bg-dark-primary z-10">
+          <div className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-[400px] lg:h-[400px] rounded-full overflow-hidden  dark:border-dark-secondary bg-light dark:bg-dark-primary z-10">
             <img
               src={loza.src}
               alt="Avatar"
