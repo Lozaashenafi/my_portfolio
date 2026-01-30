@@ -9,6 +9,15 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        required: false,
+        defaultValue: "user",
+      },
+    },
+  },
   emailAndPassword: {
     enabled: true,
   },
@@ -16,6 +25,7 @@ export const auth = betterAuth({
     sendOnSignUp: true,
     autoSignInAfterVerification: true,
     sendVerificationEmail: async ({ user, url, token }) => {
+      console.log("VERIFICATION LINK >>>", url);
       await resend.emails.send({
         from: "onboarding@resend.dev", // You can change this when you have a domain
         to: user.email,
