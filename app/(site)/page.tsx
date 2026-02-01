@@ -5,13 +5,22 @@ import OtherProjects from "../../components/home/OtherProjects";
 import SkillsSection from "../../components/home/SkillsSection";
 import BlogSection from "../../components/home/BlogSection";
 import ContactSection from "../../components/home/ContactSection";
-export default function Home() {
+import Experience from "../../components/home/Experience";
+import prisma from "../../lib/prisma";
+
+export default async function Home() {
+  const experienceData = await prisma.experience.findMany({
+    orderBy: {
+      startDate: "desc",
+    },
+  });
   return (
     <>
       <Banner />
       <AboutSection />
       <ProjectsSection />
       <OtherProjects />
+      <Experience data={experienceData} />
       <SkillsSection />
       <BlogSection />
       <ContactSection />

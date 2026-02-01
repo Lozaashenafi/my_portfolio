@@ -80,26 +80,55 @@ model Project {
   published    Boolean  @default(true)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-
-  categoryId   String?   @db.VarChar(191)
-  category     Category? @relation(fields: [categoryId], references: [id])
+  highlighted  Boolean?
   skills       SkillsOnProjects[] 
 }
 
-model Category {
-  id       String    @id @default(cuid()) @db.VarChar(191)
-  name     String    @unique @db.VarChar(191)
-  projects Project[]
+
+// Add this enum
+enum SkillCategory {
+  FRONTEND
+  BACKEND
+  TOOLS
 }
 
 model Skill {
-  id       String    @id @default(cuid()) @db.VarChar(191)
-  name     String    @unique @db.VarChar(191)
-  icon     String?   @db.VarChar(191)
-  level    Int?
-  projects SkillsOnProjects[]
+  id          String               @id @default(cuid()) @db.VarChar(191)
+  name        String               @unique @db.VarChar(191)
+  icon        String?              @db.VarChar(191)
+  level       Int?
+  // Add this field
+  category    SkillCategory        @default(FRONTEND)
+  experiences SkillsOnExperiences[]
+  projects    SkillsOnProjects[]
+}
+model Experience {
+  id             String    @id @default(cuid()) @db.VarChar(191)
+  company        String    @db.VarChar(191)
+  role           String    @db.VarChar(191)
+  location       String?   @db.VarChar(191)
+  // Changed to String[] for easy bullet point rendering in React
+  description    String[]  @db.Text 
+  startDate      DateTime
+  endDate        DateTime?
+  current        Boolean   @default(false)
+  companyLogo    String?   @db.Text
+  companyWebsite String?   @db.Text
+  createdAt      DateTime  @default(now())
+  
+  // Relation to skills used during this experience
+  skills         SkillsOnExperiences[]
 }
 
+// Explicit Join Table for Experience and Skills
+model SkillsOnExperiences {
+  experienceId String     @db.VarChar(191)
+  skillId      String     @db.VarChar(191)
+  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  skill        Skill      @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([experienceId, skillId])
+}
 // Explicit Join Table for many-to-many to avoid index length issues
 model SkillsOnProjects {
   projectId String @db.VarChar(191)
@@ -110,19 +139,6 @@ model SkillsOnProjects {
   @@id([projectId, skillId])
 }
 
-model Experience {
-  id             String    @id @default(cuid()) @db.VarChar(191)
-  company        String    @db.VarChar(191)
-  role           String    @db.VarChar(191)
-  location       String?   @db.VarChar(191)
-  description    String    @db.Text
-  startDate      DateTime
-  endDate        DateTime?
-  current        Boolean   @default(false)
-  companyLogo    String?   @db.Text
-  companyWebsite String?   @db.Text
-  createdAt      DateTime  @default(now())
-}
 
 model BlogPost {
   id        String   @id @default(cuid()) @db.VarChar(191)
@@ -130,13 +146,16 @@ model BlogPost {
   slug      String   @unique @db.VarChar(191)
   excerpt   String   @db.Text
   content   String   @db.Text
+  coverImage String? @db.Text        // New: Added image support
   published Boolean  @default(false)
-  frontPage Boolean  @default(false)
+  frontPage Boolean  @default(false) // Whether to show on the Home Page
+  stars     Int      @default(0)     // New: Public interaction
+  views     Int      @default(0)     // New: Tracking popularity
   hashtags  String?  @db.VarChar(191)
+  readMin   String? 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-
 model Cv {
   id        String   @id @default(cuid()) @db.VarChar(191)
   filePath  String   @db.Text

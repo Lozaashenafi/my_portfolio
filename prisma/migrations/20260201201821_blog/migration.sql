@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "BlogPost" ADD COLUMN     "coverImage" TEXT,
+ADD COLUMN     "stars" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "views" INTEGER NOT NULL DEFAULT 0;

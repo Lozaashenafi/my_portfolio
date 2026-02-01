@@ -13,6 +13,11 @@ import {
   Menu,
   X,
   ExternalLink,
+  Briefcase, // For Experience
+  Cpu, // For Skills
+  Layers, // For Categories
+  FileText, // For CV
+  User as UserIcon,
 } from "lucide-react";
 
 export default function AdminLayout({
@@ -76,7 +81,6 @@ export default function AdminLayout({
           flex flex-col border-r border-dark-tertiary z-50 overflow-hidden relative
         `}
       >
-        {/* We use a fixed width wrapper inside the animated width container to prevent "squishing" text */}
         <div className="w-72 flex flex-col h-full">
           <div className="p-8 flex items-center justify-between">
             <div className="text-primary font-mono text-xl font-bold tracking-tighter">
@@ -87,33 +91,96 @@ export default function AdminLayout({
             </button>
           </div>
 
-          <nav className="flex-1 px-4 space-y-1">
-            <AdminNavLink
-              active={currentTab === "overview"}
-              onClick={() => setTab("overview")}
-              icon={<LayoutDashboard size={18} />}
-              label="Dashboard"
-            />
-            <AdminNavLink
-              active={currentTab === "projects"}
-              onClick={() => setTab("projects")}
-              icon={<FolderKanban size={18} />}
-              label="Projects"
-            />
-            <AdminNavLink
-              active={currentTab === "blog"}
-              onClick={() => setTab("blog")}
-              icon={<PenTool size={18} />}
-              label="Blog Posts"
-            />
-            <AdminNavLink
-              active={currentTab === "messages"}
-              onClick={() => setTab("messages")}
-              icon={<MessageSquare size={18} />}
-              label="Messages"
-            />
+          <nav className="flex-1 px-4 space-y-8 overflow-y-auto custom-scrollbar">
+            {/* Main Section */}
+            <div>
+              <p className="px-4 text-[10px] font-mono uppercase tracking-widest text-gray-500 mb-4">
+                Main
+              </p>
+              <div className="space-y-1">
+                <AdminNavLink
+                  active={currentTab === "overview"}
+                  onClick={() => setTab("overview")}
+                  icon={<LayoutDashboard size={18} />}
+                  label="Dashboard"
+                />
+              </div>
+            </div>
+
+            {/* Content Section */}
+            <div>
+              <p className="px-4 text-[10px] font-mono uppercase tracking-widest text-gray-500 mb-4">
+                Content
+              </p>
+              <div className="space-y-1">
+                <AdminNavLink
+                  active={currentTab === "projects"}
+                  onClick={() => setTab("projects")}
+                  icon={<FolderKanban size={18} />}
+                  label="Projects"
+                />
+                <AdminNavLink
+                  active={currentTab === "blog"}
+                  onClick={() => setTab("blog")}
+                  icon={<PenTool size={18} />}
+                  label="Blog Posts"
+                />
+              </div>
+            </div>
+
+            {/* Career Section */}
+            <div>
+              <p className="px-4 text-[10px] font-mono uppercase tracking-widest text-gray-500 mb-4">
+                Career
+              </p>
+              <div className="space-y-1">
+                <AdminNavLink
+                  active={currentTab === "experience"}
+                  onClick={() => setTab("experience")}
+                  icon={<Briefcase size={18} />}
+                  label="Experience"
+                />
+                <AdminNavLink
+                  active={currentTab === "cv"}
+                  onClick={() => setTab("cv")}
+                  icon={<FileText size={18} />}
+                  label="CV / Resume"
+                />
+              </div>
+            </div>
+
+            {/* System Section */}
+            <div>
+              <p className="px-4 text-[10px] font-mono uppercase tracking-widest text-gray-500 mb-4">
+                Taxonomy
+              </p>
+              <div className="space-y-1">
+                <AdminNavLink
+                  active={currentTab === "skills"}
+                  onClick={() => setTab("skills")}
+                  icon={<Cpu size={18} />}
+                  label="Skills"
+                />
+              </div>
+            </div>
+
+            {/* Communication Section */}
+            <div>
+              <p className="px-4 text-[10px] font-mono uppercase tracking-widest text-gray-500 mb-4">
+                Inbox
+              </p>
+              <div className="space-y-1">
+                <AdminNavLink
+                  active={currentTab === "messages"}
+                  onClick={() => setTab("messages")}
+                  icon={<MessageSquare size={18} />}
+                  label="Messages"
+                />
+              </div>
+            </div>
           </nav>
 
+          {/* User Section */}
           <div className="p-6 border-t border-dark-tertiary bg-dark-primary/50">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 shrink-0 rounded-sm bg-dark-tertiary border border-primary/30 flex items-center justify-center text-primary font-mono font-bold">
@@ -201,7 +268,7 @@ const AdminNavLink = ({
 }) => (
   <button
     onClick={onClick}
-    className={`w-full flex items-center gap-4 px-4 py-4 rounded-sm transition-all group whitespace-nowrap ${
+    className={`w-full flex items-center gap-4 px-4 py-3 rounded-sm transition-all group whitespace-nowrap ${
       active
         ? "bg-primary text-white shadow-lg shadow-primary/20 translate-x-1"
         : "text-gray-400 hover:bg-dark-tertiary hover:text-soft-white"

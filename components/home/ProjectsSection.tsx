@@ -1,34 +1,28 @@
-"use client";
+// components/home/ProjectsSection.tsx
 import React from "react";
 import FeaturedProject from "./FeaturedProject";
 import MiniHeader from "../ui/MiniHeader";
+import prisma from "../../lib/prisma";
 
-const ProjectsSection: React.FC = () => {
-  // Use "any" temporarily for mock data if you don't want to write every Prisma field
-  // But we format the skills to match the join-table structure
-  const projects = [
-    {
-      id: "1",
-      title: "E-Commerce Platform",
-      slug: "e-commerce-platform",
-      description:
-        "A full-featured online store with payment processing. Built with React and Node.js.",
-      githubUrl: "#",
-      liveUrl: "#",
-      skills: [
-        { skill: { id: "s1", name: "React" } },
-        { skill: { id: "s2", name: "PostgreSQL" } },
-      ],
-      // Adding empty/default values for missing Prisma fields
-      content: "",
-      coverImage: null,
-      featured: true,
+const ProjectsSection = async () => {
+  // Fetch ONLY projects that are published AND highlighted
+  const highlightedProjects = await prisma.project.findMany({
+    where: {
       published: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      categoryId: null,
+      highlighted: true,
     },
-  ];
+    include: {
+      skills: {
+        include: {
+          skill: true,
+        },
+      },
+    },
+    orderBy: { createdAt: "desc" },
+  });
+
+  // If there are no highlighted projects, we don't render the section
+  if (highlightedProjects.length === 0) return null;
 
   return (
     <section
@@ -38,11 +32,11 @@ const ProjectsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <MiniHeader title="Projects" number={2} />
 
-        {projects.map((project, index) => (
+        {highlightedProjects.map((project, index) => (
           <FeaturedProject
             key={project.id}
             project={project as any}
-            reverse={index % 2 !== 0} // This handles the alternating layout
+            reverse={index % 2 !== 0}
           />
         ))}
       </div>
