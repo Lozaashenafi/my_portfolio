@@ -16,21 +16,21 @@ const Footer: React.FC = () => {
         {/* Social Links */}
         <div className="flex items-center gap-6 text-dark-tertiary dark:text-soft-white">
           <a
-            href="#"
+            href="https://github.com/Lozaashenafi"
             className="hover:text-primary transition-colors"
             aria-label="GitHub"
           >
             <Github size={20} />
           </a>
           <a
-            href="#"
+            href="https://www.linkedin.com/in/loza-ashenafi-773263286/"
             className="hover:text-primary transition-colors"
             aria-label="LinkedIn"
           >
             <Linkedin size={20} />
           </a>
           <a
-            href="#"
+            href="https://x.com/azol92"
             className="hover:text-primary transition-colors"
             aria-label="Twitter"
           >

@@ -5,13 +5,18 @@ import { revalidatePath } from "next/cache";
 import fs from "fs/promises";
 import path from "path";
 
-// --- ADMIN ACTIONS ---
+export async function getBlogPosts() {
+  return await prisma.blogPost.findMany({
+    orderBy: { createdAt: "desc" },
+  });
+}
 
 export async function saveBlogPost(formData: FormData, id?: string) {
   const title = formData.get("title") as string;
   const excerpt = formData.get("excerpt") as string;
   const content = formData.get("content") as string;
   const hashtags = formData.get("hashtags") as string;
+  const readMin = formData.get("readMin") as string; // Added new field
   const published = formData.get("published") === "on";
   const frontPage = formData.get("frontPage") === "on";
 
@@ -40,6 +45,7 @@ export async function saveBlogPost(formData: FormData, id?: string) {
     excerpt,
     content,
     hashtags,
+    readMin, // Added new field
     published,
     frontPage,
     coverImage: imagePath,
@@ -56,14 +62,17 @@ export async function saveBlogPost(formData: FormData, id?: string) {
   revalidatePath("/");
 }
 
-// --- PUBLIC INTERACTION ACTIONS ---
+export async function deleteBlogPost(id: string) {
+  await prisma.blogPost.delete({ where: { id } });
+  revalidatePath("/admin");
+}
 
 export async function incrementStars(id: string) {
   await prisma.blogPost.update({
     where: { id },
     data: { stars: { increment: 1 } },
   });
-  revalidatePath(`/blog`); // Update list
+  revalidatePath(`/blog`);
 }
 
 export async function incrementViews(slug: string) {

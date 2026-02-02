@@ -1,12 +1,15 @@
 import React from "react";
 import { Github, Linkedin, Mail, ChevronDown } from "lucide-react";
 import loza from "../../public/photo.png";
+import Link from "next/link"; // Make sure this is at the top of your file
 
 const Banner = () => {
   return (
-    <section className="bg-light dark:bg-dark-primary min-h-screen flex flex-col items-center justify-center px-6 md:px-8 transition-colors duration-300 relative overflow-hidden py-20 md:py-0">
+    <section
+      id="#Home"
+      className="bg-light dark:bg-dark-primary min-h-screen flex flex-col items-center justify-center px-10 md:px-8 transition-colors duration-300 relative overflow-hidden py-24 md:py-0 "
+    >
       <div className="max-w-7xl w-full flex flex-col-reverse md:flex-row items-center justify-between gap-10 md:mt-[-5vh]">
-        {/* Text Content */}
         <div className="w-full md:w-3/5 text-center md:text-left z-10">
           <div className="flex items-center justify-center md:justify-start space-x-3 mb-4 md:mb-6">
             <div className="hidden md:block w-8 h-[2px] bg-primary"></div>
@@ -36,12 +39,18 @@ const Banner = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start">
-            <button className="bg-primary hover:bg-secondary text-soft-white px-8 py-3 md:px-10 md:py-4 font-bold rounded-sm shadow-xl transition-all hover:scale-105 active:scale-95">
+            <Link
+              href="#projects"
+              className="bg-primary hover:bg-secondary text-soft-white px-8 py-3 md:px-10 md:py-4 font-bold rounded-sm shadow-xl transition-all hover:scale-105 active:scale-95 text-center flex items-center justify-center"
+            >
               View My Work
-            </button>
-            <button className="border-2 border-dark-secondary dark:border-soft-white text-dark-primary dark:text-soft-white px-8 py-3 md:px-10 md:py-4 font-bold hover:bg-dark-secondary dark:hover:bg-soft-white hover:text-soft-white dark:hover:text-dark-primary transition-all active:scale-95">
+            </Link>
+            <Link
+              href="#contact"
+              className="border-2 border-dark-secondary dark:border-soft-white text-dark-primary dark:text-soft-white px-8 py-3 md:px-10 md:py-4 font-bold hover:bg-dark-secondary dark:hover:bg-soft-white hover:text-soft-white dark:hover:text-dark-primary transition-all active:scale-95 text-center flex items-center justify-center"
+            >
               Get In Touch
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -71,19 +80,19 @@ const Banner = () => {
 
         <div className="flex space-x-8 md:space-x-6 text-dark-secondary dark:text-soft-white">
           <a
-            href="#"
+            href="https://github.com/Lozaashenafi"
             className="hover:text-primary transition-colors transform hover:scale-110"
           >
             <Github size={24} />
           </a>
           <a
-            href="#"
+            href="https://www.linkedin.com/in/loza-ashenafi-773263286/"
             className="hover:text-primary transition-colors transform hover:scale-110"
           >
             <Linkedin size={24} />
           </a>
           <a
-            href="#"
+            href="mailto:lozaashenafi@gmail.com"
             className="hover:text-primary transition-colors transform hover:scale-110"
           >
             <Mail size={24} />

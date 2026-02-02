@@ -33,17 +33,17 @@ const ContactSection = async () => {
               <ContactInfoItem
                 icon={<Mail className="text-primary" />}
                 label="Email"
-                value="hello@yourdomain.com"
+                value="lozaashenafi@gmail.com"
               />
               <ContactInfoItem
                 icon={<Phone className="text-primary" />}
                 label="Phone"
-                value="+1 (555) 000-0000"
+                value="+251 937 732 953"
               />
               <ContactInfoItem
                 icon={<MapPin className="text-primary" />}
                 label="Location"
-                value="Your City, Country"
+                value="Addis Abeba, Ethiopia"
               />
             </div>
 
@@ -53,11 +53,15 @@ const ContactSection = async () => {
                 text="Download Resume"
                 href={cv?.filePath || "#"} // Pass the dynamic link here
               />
-              <SocialLink icon={<Github size={18} />} text="GitHub" href="#" />
+              <SocialLink
+                icon={<Github size={18} />}
+                text="GitHub"
+                href="https://github.com/Lozaashenafi"
+              />
               <SocialLink
                 icon={<Linkedin size={18} />}
                 text="LinkedIn"
-                href="#"
+                href="https://www.linkedin.com/in/loza-ashenafi-773263286/"
               />
             </div>
           </div>
