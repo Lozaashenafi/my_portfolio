@@ -7,6 +7,7 @@ import BlogSection from "../../components/home/BlogSection";
 import ContactSection from "../../components/home/ContactSection";
 import Experience from "../../components/home/Experience";
 import prisma from "../../lib/prisma";
+export const dynamic = "force-dynamic"; // This line prevents the build error
 
 export default async function Home() {
   const experienceData = await prisma.experience.findMany({
