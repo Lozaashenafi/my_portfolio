@@ -1,5 +1,7 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"] // Required for Prisma 7 adapters
+
 }
 
 datasource db {
