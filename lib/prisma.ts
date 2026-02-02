@@ -5,13 +5,18 @@ import { PrismaClient } from "@prisma/client";
 
 const connectionString = process.env.DATABASE_URL;
 
-// Create the connection pool
-const pool = new Pool({ connectionString });
+// Updated Pool configuration
+const pool = new Pool({
+  connectionString,
+  ssl: {
+    rejectUnauthorized: false, // This fixes the "self-signed certificate" error
+  },
+});
+
 const adapter = new PrismaPg(pool);
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
-// Initialize Prisma with the adapter
 export const prisma = globalForPrisma.prisma || new PrismaClient({ adapter });
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
