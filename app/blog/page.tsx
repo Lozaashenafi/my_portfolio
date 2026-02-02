@@ -2,6 +2,7 @@ import React from "react";
 import prisma from "../../lib/prisma";
 import MiniHeader from "../../components/ui/MiniHeader";
 import BlogCard from "../../components/ui/BlogCard";
+export const dynamic = "force-dynamic"; // <--- ADD THIS AT THE VERY TOP
 
 export default async function BlogListPage() {
   // 1. Fetch all published articles

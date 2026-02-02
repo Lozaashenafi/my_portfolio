@@ -3,6 +3,7 @@ import prisma from "../../../lib/prisma";
 import { notFound } from "next/navigation";
 import BlogDetailPage from "../../../components/home/BlogDetailPage";
 import { incrementViews } from "../../../lib/actions/blog";
+export const dynamic = "force-dynamic"; // <--- ADD THIS AT THE VERY TOP
 
 export default async function Page({
   params,
