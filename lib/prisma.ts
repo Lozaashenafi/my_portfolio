@@ -1,15 +1,18 @@
-// lib/prisma.ts
-import { Pool } from "pg";
+import { Pool, defaults } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 
+// This forces the PG driver to allow self-signed certificates globally
+defaults.ssl = {
+  rejectUnauthorized: false,
+};
+
 const connectionString = process.env.DATABASE_URL;
 
-// Updated Pool configuration
 const pool = new Pool({
   connectionString,
   ssl: {
-    rejectUnauthorized: false, // This fixes the "self-signed certificate" error
+    rejectUnauthorized: false,
   },
 });
 
