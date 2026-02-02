@@ -2,7 +2,6 @@ import { Pool, defaults } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 
-// This forces the PG driver to allow self-signed certificates globally
 defaults.ssl = {
   rejectUnauthorized: false,
 };
