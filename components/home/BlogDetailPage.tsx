@@ -102,13 +102,18 @@ const BlogDetailPage = ({
           </div>
         )}
 
-        <section
-          className="prose prose-lg prose-slate dark:prose-invert max-w-none 
-  prose-headings:font-black prose-headings:uppercase prose-a:text-primary 
-  prose-strong:text-slate-900 dark:prose-strong:text-white text-dark-tertiary dark:text-soft-white"
-        >
+        <section className="max-w-none">
           <div
-            className="whitespace-pre-line"
+            className="prose prose-lg prose-slate dark:prose-invert 
+      max-w-none
+      /* These classes below ensure H1, H2, and Lists are visible and spaced */
+      prose-headings:font-black prose-headings:uppercase 
+      prose-h1:text-3xl prose-h2:text-2xl
+      prose-p:leading-relaxed prose-p:mb-4
+      prose-ul:list-disc prose-ul:ml-6
+      prose-ol:list-decimal prose-ol:ml-6
+      prose-a:text-primary 
+      text-dark-tertiary dark:text-soft-white"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </section>
