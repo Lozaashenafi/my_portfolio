@@ -2,60 +2,82 @@
 
 import prisma from "../prisma";
 import { revalidatePath } from "next/cache";
-import fs from "fs/promises";
-import path from "path";
+import { supabase } from "../supabase"; // Use the same client we created for projects
 
 export async function getCv() {
-  // Usually, a portfolio has one active CV. We'll get the latest one.
+  // Get the latest CV from the database
   return await prisma.cv.findFirst({
     orderBy: { createdAt: "desc" },
   });
 }
 
 export async function uploadCv(formData: FormData) {
-  const file = formData.get("cvFile") as File;
+  try {
+    const file = formData.get("cvFile") as File;
 
-  if (!file || file.size === 0) {
-    throw new Error("No file selected");
+    if (!file || file.size === 0) {
+      throw new Error("No file selected");
+    }
+
+    // 1. Generate a unique filename
+    const fileExt = file.name.split(".").pop();
+    const fileName = `CV_${Date.now()}.${fileExt}`;
+    const filePath = `resumes/${fileName}`;
+
+    // 2. Upload the file to the 'portfolio' bucket in Supabase
+    // (Ensure you created the 'portfolio' bucket and set it to Public)
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("portfolio")
+      .upload(filePath, file);
+
+    if (uploadError) {
+      console.error("Supabase Upload Error:", uploadError);
+      throw new Error("Failed to upload CV to cloud storage");
+    }
+
+    // 3. Get the Public URL of the uploaded file
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from("portfolio").getPublicUrl(filePath);
+
+    // 4. Update Database
+    // We delete old records first so you only ever have one active CV link
+    await prisma.cv.deleteMany({});
+
+    const newCv = await prisma.cv.create({
+      data: {
+        filePath: publicUrl, // This is now a full https://... URL
+      },
+    });
+
+    revalidatePath("/admin");
+    revalidatePath("/");
+    return newCv;
+  } catch (error: any) {
+    console.error("CV Upload Error:", error);
+    throw new Error(
+      error.message || "An unexpected error occurred during upload",
+    );
   }
-
-  // 1. Process the file
-  const buffer = Buffer.from(await file.arrayBuffer());
-  const filename = `CV_${Date.now()}_${file.name.replaceAll(" ", "_")}`;
-  const uploadDir = path.join(process.cwd(), "public/uploads/cv");
-
-  // 2. Ensure directory exists
-  await fs.mkdir(uploadDir, { recursive: true });
-
-  // 3. Write file to public/uploads/cv
-  const filePath = `/uploads/cv/${filename}`;
-  await fs.writeFile(path.join(process.cwd(), "public", filePath), buffer);
-
-  // 4. Save to Database
-  // We'll delete old records so only one CV remains active (optional logic)
-  await prisma.cv.deleteMany({});
-
-  const newCv = await prisma.cv.create({
-    data: { filePath },
-  });
-
-  revalidatePath("/admin");
-  revalidatePath("/");
-  return newCv;
 }
 
-export async function deleteCv(id: string, filePath: string) {
+export async function deleteCv(id: string, fileUrl: string) {
   try {
-    // Delete from file system
-    const fullPath = path.join(process.cwd(), "public", filePath);
-    await fs.unlink(fullPath);
+    // 1. (Optional) Extract filename from URL to delete from Supabase storage
+    // If the URL is https://.../resumes/filename.pdf, we extract 'resumes/filename.pdf'
+    const pathSegments = fileUrl.split("/");
+    const fileNameInStorage = `resumes/${pathSegments[pathSegments.length - 1]}`;
+
+    await supabase.storage.from("portfolio").remove([fileNameInStorage]);
+
+    // 2. Delete from Prisma Database
+    await prisma.cv.delete({ where: { id } });
+
+    revalidatePath("/admin");
+    revalidatePath("/");
   } catch (err) {
-    console.error("File already deleted or not found");
+    console.error("Delete Error:", err);
+    // Even if storage deletion fails, we want to clear the DB record
+    await prisma.cv.delete({ where: { id } }).catch(() => {});
   }
-
-  // Delete from DB
-  await prisma.cv.delete({ where: { id } });
-
-  revalidatePath("/admin");
-  revalidatePath("/");
 }

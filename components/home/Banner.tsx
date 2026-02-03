@@ -100,8 +100,7 @@ const Banner = () => {
             variants={itemVariants}
             className="text-dark-secondary dark:text-soft-white max-w-lg mb-8 md:mb-10 text-sm md:text-lg mx-auto md:mx-0 leading-relaxed opacity-90"
           >
-            I craft exceptional digital experiences with clean code and
-            pixel-perfect designs. Specializing in modern web technologies.
+           I craft beautiful, functional, and scalable web applications using modern technologies and best practices.
           </motion.p>
 
           <motion.div
