@@ -25,11 +25,11 @@ export default function AppreciateButton({
     <button
       onClick={handleAppreciate}
       disabled={voted}
-      className={`flex items-center gap-2 px-8 py-4 rounded-full font-bold transition-all shadow-lg 
+      className={`flex items-center gap-2 px-8 py-4 rounded-full font-bold transition-all  
         ${
           voted
-            ? "bg-primary text-white scale-105"
-            : "bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:scale-105"
+            ? "bg-primary text-light  scale-105"
+            : "bg-dark-tertiary dark:bg-dark-tertiary text-white dark:text-soft-white hover:scale-105"
         }`}
     >
       <Star size={20} fill={voted ? "white" : "none"} />

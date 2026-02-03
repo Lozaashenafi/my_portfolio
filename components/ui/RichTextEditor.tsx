@@ -107,8 +107,9 @@ export default function RichTextEditor({
     },
     editorProps: {
       attributes: {
+        // MUST BE A SINGLE LINE STRING TO AVOID "InvalidCharacterError"
         class:
-          "prose prose-invert max-w-none focus:outline-none min-h-[400px] p-4 font-sans leading-relaxed text-soft-white bg-dark-primary",
+          "prose prose-invert max-w-none focus:outline-none min-h-[400px] p-4 font-sans text-soft-white bg-dark-primary leading-normal prose-p:my-1 prose-headings:mt-4 prose-headings:mb-1 prose-ul:my-1 prose-ol:my-1 prose-li:my-0",
       },
     },
   });
