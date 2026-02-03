@@ -1,38 +1,45 @@
+"use client"; // 1. Set as client component
 import React from "react";
 import { ArrowUpRight, Calendar, Clock } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion"; // 2. Import motion
 
-// 1. Updated Interface to match your Prisma Schema
 export interface BlogPost {
-  id: string; // Changed from number to string (cuid)
+  id: string;
   title: string;
-  slug: string; // Added slug for navigation
+  slug: string;
   excerpt: string;
-  createdAt: Date; // Changed from string to Date
-  readMin: string; // Maps to readMin in schema
-  hashtags: string | null; // Maps to hashtags in schema
-  frontPage?: boolean; // Maps to frontPage in schema
+  createdAt: Date;
+  readMin: string;
+  hashtags: string | null;
+  frontPage?: boolean;
 }
 
 interface BlogCardProps {
   post: BlogPost;
-  isFeatured?: boolean; // We can pass this from the parent grid
+  isFeatured?: boolean;
+  index?: number; // 3. Added index for staggered delay
 }
 
-const BlogCard: React.FC<BlogCardProps> = ({ post, isFeatured }) => {
-  // Logic to process the data without changing UI
+const BlogCard: React.FC<BlogCardProps> = ({ post, isFeatured, index = 0 }) => {
   const date = new Date(post.createdAt).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
   });
 
-  // Convert "#react #nextjs" string into ["#react", "#nextjs"] array
   const tags = post.hashtags?.split(" ").filter((t) => t.trim() !== "") || [];
 
   return (
-    <div
-      className={`h-full bg-soft-white dark:bg-dark-secondary border border-slate-200 dark:border-dark-tertiary p-8 rounded-sm flex flex-col group hover:border-primary transition-all`}
+    <motion.div
+      // 4. Entry Animation
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      // 5. Hover Animation: Lift and Shadow
+      whileHover={{ y: -8, transition: { duration: 0.2 } }}
+      className="h-full bg-soft-white dark:bg-dark-secondary border border-slate-200 dark:border-dark-tertiary p-8 rounded-sm flex flex-col group hover:border-primary transition-colors cursor-pointer"
     >
       {/* Post Metadata */}
       <div className="flex items-center gap-6 mb-6 text-xs font-mono text-slate-500 dark:text-gray-400">
@@ -51,19 +58,19 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, isFeatured }) => {
         </div>
       </div>
 
-      {/* Title & Excerpt */}
       <h3
         className={`font-black text-slate-900 dark:text-soft-white group-hover:text-primary transition-colors mb-4 leading-tight uppercase ${
-          post.frontPage || isFeatured ? "text-3xl md:text-4xl" : "text-xl"
+          isFeatured ? "text-3xl md:text-4xl" : "text-xl"
         }`}
       >
-        {post.title}
+        <Link href={`/blog/${post.slug}`}>{post.title}</Link>
       </h3>
+
       <p className="text-slate-600 dark:text-gray-400 leading-relaxed mb-8 grow line-clamp-3">
         {post.excerpt}
       </p>
 
-      {/* Footer: Tags & Action */}
+      {/* Footer */}
       <div className="flex items-center justify-between mt-auto pt-6 border-t border-slate-200 dark:border-dark-tertiary">
         <div className="flex flex-wrap gap-x-4">
           {tags.slice(0, 3).map((tag) => (
@@ -76,7 +83,6 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, isFeatured }) => {
           ))}
         </div>
 
-        {/* Changed from <button> to <Link> for real navigation */}
         <Link
           href={`/blog/${post.slug}`}
           className="text-primary opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all flex items-center gap-1 font-mono text-xs font-bold whitespace-nowrap"
@@ -84,7 +90,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, isFeatured }) => {
           READ MORE <ArrowUpRight size={16} />
         </Link>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -4,13 +4,13 @@ import BlogCard from "../ui/BlogCard";
 import MiniHeader from "../ui/MiniHeader";
 import prisma from "../../lib/prisma";
 import Link from "next/link";
+// We don't need "use client" here!
 
 const BlogSection = async () => {
-  // Fetch posts marked for front page
   const posts = await prisma.blogPost.findMany({
     where: { published: true, frontPage: true },
     orderBy: { createdAt: "desc" },
-    take: 4, // Matches your grid layout (1 featured + 3 others)
+    take: 4,
   });
 
   if (posts.length === 0) return null;
@@ -24,42 +24,33 @@ const BlogSection = async () => {
         <MiniHeader title="Blog & Insights" number={4} />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Featured Post - First post in array */}
-          {posts[0] && (
-            <div className="lg:col-span-8">
-              <BlogCard post={posts[0] as any} isFeatured />
-            </div>
-          )}
+          {/* Map through posts to get automatic indexing for the stagger effect */}
+          {posts.map((post, idx) => {
+            // Logic for the layout: First one is big, rest are small
+            const isFeatured = idx === 0;
+            const gridClass = isFeatured ? "lg:col-span-8" : "lg:col-span-4";
 
-          {/* Side Post - Second post */}
-          {posts[1] && (
-            <div className="lg:col-span-4">
-              <BlogCard post={posts[1] as any} />
-            </div>
-          )}
+            return (
+              <div key={post.id} className={gridClass}>
+                <BlogCard
+                  post={post as any}
+                  isFeatured={isFeatured}
+                  index={idx}
+                />
+              </div>
+            );
+          })}
 
-          {/* Bottom Row - Third post */}
-          {posts[2] && (
-            <div className="lg:col-span-4">
-              <BlogCard post={posts[2] as any} />
-            </div>
-          )}
-
-          {/* Bottom Row - Fourth post */}
-          {posts[3] && (
-            <div className="lg:col-span-4">
-              <BlogCard post={posts[3] as any} />
-            </div>
-          )}
-
-          {/* View All CTA */}
-          <div className="lg:col-span-4 flex items-center justify-center">
+          {/* View All CTA - Let's use a standard CSS transition here to keep it simple */}
+          <div className="lg:col-span-4 flex items-center justify-center p-8">
             <Link
               href="/blog"
-              className="group flex items-center gap-2 text-primary font-bold uppercase tracking-widest hover:translate-x-2 transition-transform"
+              className="group flex flex-col items-center gap-4 text-primary font-bold uppercase tracking-[0.3em] text-sm"
             >
-              View All Articles
-              <div className="h-[2px] w-8 bg-primary"></div>
+              <span className="group-hover:tracking-[0.5em] transition-all duration-300">
+                View All Articles
+              </span>
+              <div className="h-[2px] w-12 bg-primary group-hover:w-24 transition-all duration-300"></div>
             </Link>
           </div>
         </div>
