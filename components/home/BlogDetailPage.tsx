@@ -1,10 +1,9 @@
-// components/home/BlogDetailPage.tsx
 "use client";
 import React, { useEffect, useState } from "react";
 import { Calendar, Clock, Eye, ArrowLeft, Share2 } from "lucide-react";
 import Link from "next/link";
 import AppreciateButton from "../ui/AppreciateButton";
-import BlogCard from "../ui/BlogCard"; // Reusing the card for the bottom section
+import BlogCard from "../ui/BlogCard";
 import { toast } from "sonner";
 
 const BlogDetailPage = ({
@@ -15,10 +14,38 @@ const BlogDetailPage = ({
   otherPosts: any[];
 }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [hasAppreciated, setHasAppreciated] = useState(false);
+
   const tags =
     post.hashtags?.split(" ").filter((t: string) => t.startsWith("#")) || [];
+  // Inside BlogDetailPage component
+  const viewProcessed = React.useRef(false); // Add this ref
 
   useEffect(() => {
+    // 1. Prevent double-firing in Development/Strict Mode
+    if (viewProcessed.current) return;
+    viewProcessed.current = true;
+
+    // --- 1. HANDLE UNIQUE VIEWS ---
+    const viewedPosts = JSON.parse(
+      localStorage.getItem("viewed_articles") || "[]",
+    );
+
+    if (!viewedPosts.includes(post.id)) {
+      incrementView(post.id);
+      viewedPosts.push(post.id);
+      localStorage.setItem("viewed_articles", JSON.stringify(viewedPosts));
+    }
+
+    // --- 2. CHECK PREVIOUS APPRECIATION ---
+    const appreciatedPosts = JSON.parse(
+      localStorage.getItem("appreciated_articles") || "[]",
+    );
+    if (appreciatedPosts.includes(post.id)) {
+      setHasAppreciated(true);
+    }
+
+    // --- 3. SCROLL PROGRESS LOGIC ---
     const updateProgress = () => {
       const scrollHeight =
         document.documentElement.scrollHeight - window.innerHeight;
@@ -27,7 +54,32 @@ const BlogDetailPage = ({
     };
     window.addEventListener("scroll", updateProgress);
     return () => window.removeEventListener("scroll", updateProgress);
-  }, []);
+  }, [post.id]);
+
+  // Helper to call your API (you'll need an API route like /api/blog/view)
+  const incrementView = async (id: string) => {
+    try {
+      await fetch(`/api/blog/view`, {
+        method: "POST",
+        body: JSON.stringify({ id }),
+        cache: "no-store",
+      });
+    } catch (error) {
+      console.error("Failed to log view", error);
+    }
+  };
+
+  const handleAppreciateSuccess = () => {
+    const appreciatedPosts = JSON.parse(
+      localStorage.getItem("appreciated_articles") || "[]",
+    );
+    appreciatedPosts.push(post.id);
+    localStorage.setItem(
+      "appreciated_articles",
+      JSON.stringify(appreciatedPosts),
+    );
+    setHasAppreciated(true);
+  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-dark-primary transition-colors duration-300">
@@ -39,6 +91,7 @@ const BlogDetailPage = ({
       </div>
 
       <article className="max-w-4xl mx-auto px-6 py-24">
+        {/* ... (Back button and Share button remain same) ... */}
         <div className="flex justify-between items-center mb-12">
           <Link
             href="/blog"
@@ -92,6 +145,7 @@ const BlogDetailPage = ({
           </div>
         </header>
 
+        {/* ... (Cover Image and Content remain same) ... */}
         {post.coverImage && (
           <div className="relative aspect-video mb-16 overflow-hidden rounded-sm border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
             <img
@@ -104,22 +158,19 @@ const BlogDetailPage = ({
 
         <section className="max-w-none">
           <div
-            className="prose prose-lg prose-slate dark:prose-invert 
-      max-w-none
-      /* These classes below ensure H1, H2, and Lists are visible and spaced */
-      prose-headings:font-black prose-headings:uppercase 
-      prose-h1:text-3xl prose-h2:text-2xl
-      prose-p:leading-relaxed prose-p:mb-4
-      prose-ul:list-disc prose-ul:ml-6
-      prose-ol:list-decimal prose-ol:ml-6
-      prose-a:text-primary 
-      text-dark-tertiary dark:text-soft-white"
+            className="prose prose-lg prose-slate dark:prose-invert max-w-none prose-headings:font-black prose-headings:uppercase prose-h1:text-3xl prose-h2:text-2xl prose-p:leading-relaxed prose-p:mb-4 prose-ul:list-disc prose-ul:ml-6 prose-ol:list-decimal prose-ol:ml-6 prose-a:text-primary text-dark-tertiary dark:text-soft-white"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </section>
 
         <footer className="mt-20 pt-10 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-8">
-          <AppreciateButton id={post.id} initialStars={post.stars} />
+          {/* UPDATED: Pass disabled state and success callback */}
+          <AppreciateButton
+            id={post.id}
+            initialStars={post.stars}
+            disabled={hasAppreciated}
+            onSuccess={handleAppreciateSuccess}
+          />
           <div className="text-slate-500 font-mono text-[10px] uppercase tracking-widest">
             LOG_REF: {post.id} // UPDATED{" "}
             {new Date(post.updatedAt).toDateString()}

@@ -2,8 +2,9 @@
 import prisma from "../../../lib/prisma";
 import { notFound } from "next/navigation";
 import BlogDetailPage from "../../../components/home/BlogDetailPage";
-import { incrementViews } from "../../../lib/actions/blog";
-export const dynamic = "force-dynamic"; // <--- ADD THIS AT THE VERY TOP
+// Remove incrementViews import if it's not used elsewhere
+
+export const dynamic = "force-dynamic";
 
 export default async function Page({
   params,
@@ -28,9 +29,6 @@ export default async function Page({
     take: 3,
     orderBy: { createdAt: "desc" },
   });
-
-  // 3. Track view
-  incrementViews(slug);
 
   return <BlogDetailPage post={post} otherPosts={otherPosts} />;
 }
