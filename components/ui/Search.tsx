@@ -28,7 +28,7 @@ export default function Search() {
     <div className="relative w-full max-w-md">
       <input
         type="text"
-        className="w-full bg-slate-50 dark:bg-dark-tertiary border border-slate-200 dark:border-gray-700 rounded-lg py-2 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all text-slate-800 dark:text-gray-200"
+        className="w-full bg-soft-white dark:bg-dark-tertiary border border-slate-200 dark:border-gray-700 rounded-lg py-2 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all text-slate-800 dark:text-gray-200"
         placeholder="Search articles..."
         onChange={(e) => handleSearch(e.target.value)}
         // Use defaultValue so the input doesn't clear when the page refreshes

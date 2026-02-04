@@ -36,9 +36,9 @@ export default async function BlogListPage({ searchParams }: Props) {
         {/* Header & Search Section */}
         <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <p className="text-slate-500 dark:text-gray-400 font-mono text-sm uppercase tracking-widest mt-4">
+            <p className="text-dark-tertiary dark:text-light font-mono text-sm uppercase tracking-widest mt-4">
               A collection of thoughts and technical insights.
-              <span className="block mt-1 text-blue-500">
+              <span className="block mt-1 text-primary">
                 {query
                   ? `Found ${allPosts.length} matches for "${query}"`
                   : `Total Entries: ${allPosts.length}`}
