@@ -12,7 +12,6 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith("/register");
   const isAdminPage = request.nextUrl.pathname.startsWith("/admin");
 
-  // 1. If trying to access admin and NOT logged in -> Redirect to Login
   if (isAdminPage && !session) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
