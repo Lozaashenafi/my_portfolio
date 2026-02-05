@@ -56,11 +56,13 @@ const BlogDetailPage = ({
     return () => window.removeEventListener("scroll", updateProgress);
   }, [post.id]);
 
-  // Helper to call your API (you'll need an API route like /api/blog/view)
   const incrementView = async (id: string) => {
     try {
       await fetch(`/api/blog/view`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json", // ADD THIS
+        },
         body: JSON.stringify({ id }),
         cache: "no-store",
       });
@@ -68,7 +70,6 @@ const BlogDetailPage = ({
       console.error("Failed to log view", error);
     }
   };
-
   const handleAppreciateSuccess = () => {
     const appreciatedPosts = JSON.parse(
       localStorage.getItem("appreciated_articles") || "[]",
