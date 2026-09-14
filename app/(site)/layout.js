@@ -5,8 +5,7 @@ export default function SiteLayout({ children }) {
   return (
     <>
       <Header />
-      <main>{children}</main>
-      <Footer />
+      <main className="max-w-6xl mx-auto bg-light dark:bg-dark-primary">{children}</main>
     </>
   );
 }

@@ -31,7 +31,7 @@ export default async function BlogListPage({ searchParams }: Props) {
   });
 
   return (
-    <div className="min-h-screen bg-white dark:bg-dark-primary transition-colors duration-300 py-20 px-6 md:px-12">
+    <div className="min-h-screen bg-white dark:bg-dark-primary transition-colors duration-300 py-12 px-6 md:px-12">
       <div className="max-w-7xl mx-auto">
         {/* Header & Search Section */}
         <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">

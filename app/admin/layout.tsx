@@ -13,12 +13,20 @@ import {
   Menu,
   X,
   ExternalLink,
-  Briefcase, // For Experience
-  Cpu, // For Skills
-  Layers, // For Categories
-  FileText, // For CV
-  User as UserIcon,
+  Briefcase,
+  Cpu,
+  FileText,
 } from "lucide-react";
+
+const navItems = [
+  { section: "overview", label: "Dashboard", icon: <LayoutDashboard size={18} /> },
+  { section: "projects", label: "Projects", icon: <FolderKanban size={18} /> },
+  { section: "blog", label: "Blog Posts", icon: <PenTool size={18} /> },
+  { section: "experience", label: "Experience", icon: <Briefcase size={18} /> },
+  { section: "skills", label: "Skills", icon: <Cpu size={18} /> },
+  { section: "messages", label: "Messages", icon: <MessageSquare size={18} /> },
+  { section: "cv", label: "CV / Resume", icon: <FileText size={18} /> },
+] as const;
 
 export default function AdminLayout({
   children,
@@ -29,9 +37,10 @@ export default function AdminLayout({
   const [hasMounted, setHasMounted] = useState(false);
 
   const { data: session, isPending } = authClient.useSession();
-  const { currentTab, setTab, isSidebarOpen, toggleSidebar } = useAdminStore();
+  const { currentTab, isSidebarOpen, toggleSidebar, setTab } = useAdminStore();
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHasMounted(true);
   }, []);
 
@@ -56,6 +65,11 @@ export default function AdminLayout({
         },
       },
     });
+  };
+
+  const scrollToSection = (sectionId: string) => {
+    setTab(sectionId as any);
+    if (isSidebarOpen) toggleSidebar();
   };
 
   if (!hasMounted || isPending) {
@@ -91,93 +105,27 @@ export default function AdminLayout({
             </button>
           </div>
 
-          <nav className="flex-1 px-4 space-y-8 overflow-y-auto custom-scrollbar">
-            {/* Main Section */}
-            <div>
-              <p className="px-4 text-[10px] font-mono uppercase tracking-widest text-gray-500 mb-4">
-                Main
-              </p>
-              <div className="space-y-1">
-                <AdminNavLink
-                  active={currentTab === "overview"}
-                  onClick={() => setTab("overview")}
-                  icon={<LayoutDashboard size={18} />}
-                  label="Dashboard"
-                />
-              </div>
-            </div>
-
-            {/* Content Section */}
-            <div>
-              <p className="px-4 text-[10px] font-mono uppercase tracking-widest text-gray-500 mb-4">
-                Content
-              </p>
-              <div className="space-y-1">
-                <AdminNavLink
-                  active={currentTab === "projects"}
-                  onClick={() => setTab("projects")}
-                  icon={<FolderKanban size={18} />}
-                  label="Projects"
-                />
-                <AdminNavLink
-                  active={currentTab === "blog"}
-                  onClick={() => setTab("blog")}
-                  icon={<PenTool size={18} />}
-                  label="Blog Posts"
-                />
-              </div>
-            </div>
-
-            {/* Career Section */}
-            <div>
-              <p className="px-4 text-[10px] font-mono uppercase tracking-widest text-gray-500 mb-4">
-                Career
-              </p>
-              <div className="space-y-1">
-                <AdminNavLink
-                  active={currentTab === "experience"}
-                  onClick={() => setTab("experience")}
-                  icon={<Briefcase size={18} />}
-                  label="Experience"
-                />
-                <AdminNavLink
-                  active={currentTab === "cv"}
-                  onClick={() => setTab("cv")}
-                  icon={<FileText size={18} />}
-                  label="CV / Resume"
-                />
-              </div>
-            </div>
-
-            {/* System Section */}
-            <div>
-              <p className="px-4 text-[10px] font-mono uppercase tracking-widest text-gray-500 mb-4">
-                Taxonomy
-              </p>
-              <div className="space-y-1">
-                <AdminNavLink
-                  active={currentTab === "skills"}
-                  onClick={() => setTab("skills")}
-                  icon={<Cpu size={18} />}
-                  label="Skills"
-                />
-              </div>
-            </div>
-
-            {/* Communication Section */}
-            <div>
-              <p className="px-4 text-[10px] font-mono uppercase tracking-widest text-gray-500 mb-4">
-                Inbox
-              </p>
-              <div className="space-y-1">
-                <AdminNavLink
-                  active={currentTab === "messages"}
-                  onClick={() => setTab("messages")}
-                  icon={<MessageSquare size={18} />}
-                  label="Messages"
-                />
-              </div>
-            </div>
+          <nav className="flex-1 px-4 space-y-2 overflow-y-auto custom-scrollbar">
+            {navItems.map((item) => (
+              <button
+                key={item.section}
+                onClick={() => scrollToSection(item.section)}
+                className={`w-full flex items-center gap-4 px-4 py-3 rounded-sm transition-all group whitespace-nowrap ${
+                  currentTab === item.section
+                    ? "bg-primary text-white shadow-lg shadow-primary/20 translate-x-1"
+                    : "text-gray-400 hover:bg-dark-tertiary hover:text-soft-white"
+                }`}
+              >
+                <span
+                  className={`${activeSection === item.section ? "text-white" : "group-hover:text-primary"} transition-colors`}
+                >
+                  {item.icon}
+                </span>
+                <span className="text-xs font-mono font-bold uppercase tracking-widest">
+                  {item.label}
+                </span>
+              </button>
+            ))}
           </nav>
 
           {/* User Section */}
@@ -254,33 +202,3 @@ export default function AdminLayout({
     </div>
   );
 }
-
-const AdminNavLink = ({
-  active,
-  onClick,
-  icon,
-  label,
-}: {
-  active: boolean;
-  onClick: () => void;
-  icon: React.ReactNode;
-  label: string;
-}) => (
-  <button
-    onClick={onClick}
-    className={`w-full flex items-center gap-4 px-4 py-3 rounded-sm transition-all group whitespace-nowrap ${
-      active
-        ? "bg-primary text-white shadow-lg shadow-primary/20 translate-x-1"
-        : "text-gray-400 hover:bg-dark-tertiary hover:text-soft-white"
-    }`}
-  >
-    <span
-      className={`${active ? "text-white" : "group-hover:text-primary"} transition-colors`}
-    >
-      {icon}
-    </span>
-    <span className="text-xs font-mono font-bold uppercase tracking-widest">
-      {label}
-    </span>
-  </button>
-);

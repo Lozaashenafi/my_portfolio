@@ -34,8 +34,8 @@ export default function RegisterPage() {
 
   if (isSent) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-light dark:bg-dark-primary px-6">
-        <div className="p-10 bg-white dark:bg-[#1a1a1a] border border-slate-100 dark:border-white/5 rounded-sm text-center max-w-md shadow-2xl">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-white dark:bg-dark-primary px-6">
+        <div className="p-10 bg-white dark:bg-dark-secondary border border-slate-100 dark:border-dark-tertiary rounded-sm text-center max-w-md shadow-2xl">
           <div className="w-16 h-16 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
             <Mail size={32} />
           </div>
@@ -52,13 +52,13 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-light dark:bg-dark-primary px-6 transition-colors duration-300">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white dark:bg-dark-primary px-6 transition-colors duration-300">
       {/* Decorative Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -z-0"></div>
 
       <form
         onSubmit={handleRegister}
-        className="relative z-10 p-8 md:p-12 bg-white dark:bg-[#161616] border border-slate-200 dark:border-white/5 shadow-2xl flex flex-col gap-6 w-full max-w-md"
+        className="relative z-10 p-8 md:p-12 bg-white dark:bg-dark-secondary border border-slate-200 dark:border-dark-tertiary shadow-2xl flex flex-col gap-6 w-full max-w-md"
       >
         <div className="mb-4">
           <h1 className="text-4xl font-black text-slate-900 dark:text-soft-white leading-none">
@@ -81,7 +81,7 @@ export default function RegisterPage() {
             <input
               type="text"
               placeholder="Full Name"
-              className="w-full bg-slate-50 dark:bg-dark-primary border border-slate-200 dark:border-white/10 p-3 pl-10 text-black dark:text-soft-white rounded-sm focus:border-primary outline-none transition-all"
+              className="w-full bg-slate-50 dark:bg-dark-primary border border-slate-200 dark:border-dark-tertiary p-3 pl-10 text-black dark:text-soft-white rounded-sm focus:border-primary outline-none transition-all"
               onChange={(e) => setName(e.target.value)}
               required
             />
@@ -92,7 +92,7 @@ export default function RegisterPage() {
             <input
               type="email"
               placeholder="Email Address"
-              className="w-full bg-slate-50 dark:bg-dark-primary border border-slate-200 dark:border-white/10 p-3 pl-10 text-black dark:text-soft-white rounded-sm focus:border-primary outline-none transition-all"
+              className="w-full bg-slate-50 dark:bg-dark-primary border border-slate-200 dark:border-dark-tertiary p-3 pl-10 text-black dark:text-soft-white rounded-sm focus:border-primary outline-none transition-all"
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -103,7 +103,7 @@ export default function RegisterPage() {
             <input
               type="password"
               placeholder="Password"
-              className="w-full bg-slate-50 dark:bg-dark-primary border border-slate-200 dark:border-white/10 p-3 pl-10 text-black dark:text-soft-white rounded-sm focus:border-primary outline-none transition-all"
+              className="w-full bg-slate-50 dark:bg-dark-primary border border-slate-200 dark:border-dark-tertiary p-3 pl-10 text-black dark:text-soft-white rounded-sm focus:border-primary outline-none transition-all"
               onChange={(e) => setPassword(e.target.value)}
               required
             />

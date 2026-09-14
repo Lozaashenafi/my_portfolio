@@ -9,7 +9,7 @@ export default function BlogLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-slate-50 dark:bg-black min-h-screen">
+    <div className="bg-white dark:bg-dark-primary min-h-screen">
       <BlogHeader />
       {children}
       <Footer />

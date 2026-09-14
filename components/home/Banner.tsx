@@ -1,12 +1,12 @@
 "use client";
 
-import { Github, Linkedin, Mail, ChevronDown } from "lucide-react";
+import { Github, Linkedin, Mail, FileText, User, ChevronDown } from "lucide-react";
 import loza from "../../public/photo.png";
 import Link from "next/link";
-import { motion } from "motion/react"; // 2026 Import standard
+import { motion } from "motion/react";
 
 const Banner = () => {
-  // Variants for staggered children (the text flying in)
+  // Logic kept exactly as original
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -23,7 +23,6 @@ const Banner = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
-  // Typewriter effect logic
   const profession = "Full-Stack Developer";
   const sentence = {
     hidden: { opacity: 1 },
@@ -41,49 +40,87 @@ const Banner = () => {
     visible: { opacity: 1, y: 0 },
   };
 
+  // Skills for the "Tag" section (Adjust these to your actual skills)
+  const skills = ["React & Next.js", "Node.js", "TypeScript", "Tailwind CSS", "PostgreSQL"];
+
   return (
     <section
       id="Home"
-      className="bg-light dark:bg-dark-primary min-h-screen flex flex-col items-center justify-center px-10 md:px-8 transition-colors duration-300 relative overflow-hidden py-24 md:py-0"
+      className="bg-white dark:bg-dark-primary min-h-screen  flex flex-col items-start justify-center px-6 md:px-20 lg:px-40 transition-colors duration-300 relative overflow-hidden py-16 md:py-0"
     >
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="max-w-7xl w-full flex flex-col-reverse md:flex-row items-center justify-between gap-10 md:mt-[-5vh]"
+        className="max-w-4xl w-full flex flex-col gap-6"
       >
-        {/* Left Side: Content */}
-        <div className="w-full md:w-3/5 text-center md:text-left z-10">
+        {/* TOP SECTION: Photo + Name + Socials */}
+        <div className="flex flex-row items-center gap-6 md:gap-10">
           <motion.div
-            variants={itemVariants}
-            className="flex items-center justify-center md:justify-start space-x-3 mb-4 md:mb-6"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="w-24 h-24 md:w-32 md:h-32 rounded-md overflow-hidden border-2 border-slate-200 dark:border-slate-800 flex-shrink-0"
           >
-            <div className="hidden md:block w-8 h-[2px] bg-primary"></div>
-            <span className="text-secondary dark:text-primary font-mono font-bold uppercase tracking-widest text-xs md:text-sm">
-              Hello, I'm
+            <img src={loza.src} alt="Avatar" className="w-full h-full object-cover" />
+          </motion.div>
+
+          <div className="flex flex-col">
+            <motion.h1
+              variants={itemVariants}
+              className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-soft-white mb-2"
+            >
+              Loza
+            </motion.h1>
+
+            {/* Social Links Row */}
+            <motion.div variants={itemVariants} className="flex flex-wrap gap-4 text-dark-secondary dark:text-soft-white/60">
+              <a href="https://github.com/Lozaashenafi" className="flex items-center gap-2 hover:text-primary transition-colors text-sm font-medium">
+                <Github size={18} /> <span className="hidden sm:inline">GitHub</span>
+              </a>
+              <a href="https://www.linkedin.com/in/loza-ashenafi-773263286/" className="flex items-center gap-2 hover:text-primary transition-colors text-sm font-medium">
+                <Linkedin size={18} /> <span className="hidden sm:inline">LinkedIn</span>
+              </a>
+              <a href="mailto:lozaashenafi@gmail.com" className="flex items-center gap-2 hover:text-primary transition-colors text-sm font-medium">
+                <Mail size={18} /> <span className="hidden sm:inline">Email</span>
+              </a>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* MIDDLE SECTION: Description & Typewriter */}
+        <div className="space-y-6">
+          <motion.p
+            variants={itemVariants}
+            className="text-lg md:text-xl text-dark-secondary dark:text-soft-white/90 leading-relaxed max-w-2xl"
+          >
+            I craft beautiful, functional, and scalable web applications using modern technologies and best practices.
+          </motion.p>
+
+          {/* Skill Tags - Restructured like the image */}
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-2 items-center">
+            <span className="text-dark-secondary dark:text-soft-white/70 mr-1">I've dipped my toes in</span>
+            {skills.map((skill, index) => (
+              <span 
+                key={index} 
+                className="bg-slate-100 dark:bg-slate-800/50 text-dark-secondary dark:text-soft-white/80 px-3 py-1 rounded-sm border border-slate-200 dark:border-slate-700 text-sm md:text-base"
+              >
+                {skill}
+              </span>
+            ))}
+            <span className="bg-primary dark:bg-primary text-white px-3 py-1 rounded-sm text-sm md:text-base font-bold shadow-lg">
+              and your next big idea.
             </span>
           </motion.div>
 
-          <motion.h1
-            variants={itemVariants}
-            className="text-4xl sm:text-6xl lg:text-8xl font-black text-slate-900 dark:text-soft-white mb-4 leading-tight md:leading-[1.1]"
-          >
-            Loza,{" "}
-            <span
-              className="text-transparent"
-              style={{ WebkitTextStroke: "1px #b91c1c" }}
-            >
-              Developer
-            </span>
-          </motion.h1>
-
-          {/* Typewriter Effect for Title */}
+          {/* Typewriter Effect - Integrated as the "footer" text of the content */}
           <motion.h2
             variants={sentence}
             initial="hidden"
             animate="visible"
-            className="text-lg md:text-2xl text-dark-secondary dark:text-soft-white mb-6 flex items-center justify-center md:justify-start h-8"
+            className="text-sm md:text-base text-dark-secondary dark:text-soft-white/60 flex items-center h-6 italic"
           >
+            I am a&nbsp;
             {profession.split("").map((char, index) => (
               <motion.span key={char + "-" + index} variants={letter}>
                 {char === " " ? "\u00A0" : char}
@@ -92,98 +129,41 @@ const Banner = () => {
             <motion.span
               animate={{ opacity: [0, 1, 0] }}
               transition={{ repeat: Infinity, duration: 0.8 }}
-              className="ml-1 w-1 h-6 md:w-1.5 md:h-8 bg-primary dark:bg-secondary"
+              className="ml-1 w-[2px] h-4 bg-primary"
             ></motion.span>
           </motion.h2>
-
-          <motion.p
-            variants={itemVariants}
-            className="text-dark-secondary dark:text-soft-white max-w-lg mb-8 md:mb-10 text-sm md:text-lg mx-auto md:mx-0 leading-relaxed opacity-90"
-          >
-           I craft beautiful, functional, and scalable web applications using modern technologies and best practices.
-          </motion.p>
-
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start"
-          >
-            <Link
-              href="#projects"
-              className="bg-primary hover:bg-secondary text-soft-white px-8 py-3 md:px-10 md:py-4 font-bold rounded-sm shadow-xl transition-all hover:scale-105 active:scale-95 text-center flex items-center justify-center"
-            >
-              View My Work
-            </Link>
-            <Link
-              href="#contact"
-              className="border-2 border-dark-secondary dark:border-soft-white text-dark-primary dark:text-soft-white px-8 py-3 md:px-10 md:py-4 font-bold hover:bg-dark-secondary dark:hover:bg-soft-white hover:text-soft-white dark:hover:text-dark-primary transition-all active:scale-95 text-center flex items-center justify-center"
-            >
-              Get In Touch
-            </Link>
-          </motion.div>
         </div>
 
-        {/* Right Side: Image with Entrance Motion Only */}
+        {/* BOTTOM SECTION: Buttons */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="w-full md:w-2/5 flex justify-center relative"
+          variants={itemVariants}
+          className="flex flex-wrap gap-4 mt-4"
         >
-          <div className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-[400px] lg:h-[400px] rounded-full overflow-hidden z-10 border-4 border-transparent bg-light dark:bg-dark-primary">
-            <img
-              src={loza.src}
-              alt="Avatar"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          {/* Static Glow (Optional: Removed the pulsing animation) */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary/20 rounded-full blur-[60px] md:blur-[100px] z-0 opacity-10"></div>
+          <Link
+            href="/resume.pdf"
+            className="bg-dark-primary dark:bg-soft-white text-soft-white dark:text-dark-primary px-6 py-3 font-bold rounded-md flex items-center gap-3 transition-all hover:scale-105 active:scale-95 shadow-xl"
+          >
+            <FileText size={20} /> Download Resume
+          </Link>
+          <Link
+            href="#projects"
+            className="bg-slate-200 dark:bg-slate-800 text-dark-primary dark:text-soft-white px-6 py-3 font-bold rounded-md flex items-center gap-3 transition-all hover:bg-slate-300 dark:hover:bg-slate-700 active:scale-95"
+          >
+            <span className="opacity-40 font-mono text-sm">99</span> More about me
+          </Link>
         </motion.div>
       </motion.div>
 
-      {/* Footer Elements */}
+      {/* Subtle Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="mt-12 md:absolute md:bottom-10 left-0 right-0 flex flex-col items-center space-y-6"
+        transition={{ delay: 2 }}
+        className="absolute bottom-10 left-6 md:left-20 flex flex-col items-center text-dark-secondary/30 dark:text-soft-white/20"
       >
-        <div className="hidden md:flex flex-col items-center text-dark-secondary dark:text-soft-white">
-          <span className="text-[10px] uppercase tracking-widest mb-2 font-bold">
-            Scroll
-          </span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-          >
-            <ChevronDown size={18} />
-          </motion.div>
-        </div>
-
-        <div className="flex space-x-8 md:space-x-6 text-dark-secondary dark:text-soft-white">
-          {[
-            {
-              icon: <Github size={24} />,
-              href: "https://github.com/Lozaashenafi",
-            },
-            {
-              icon: <Linkedin size={24} />,
-              href: "https://www.linkedin.com/in/loza-ashenafi-773263286/",
-            },
-            { icon: <Mail size={24} />, href: "mailto:lozaashenafi@gmail.com" },
-          ].map((social, i) => (
-            <motion.a
-              key={i}
-              href={social.href}
-              whileHover={{ scale: 1.2, color: "#b91c1c" }}
-              whileTap={{ scale: 0.9 }}
-              className="transition-colors"
-            >
-              {social.icon}
-            </motion.a>
-          ))}
-        </div>
+        <motion.div animate={{ y: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 2 }}>
+          <ChevronDown size={20} />
+        </motion.div>
       </motion.div>
     </section>
   );

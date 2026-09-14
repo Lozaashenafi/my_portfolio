@@ -91,9 +91,9 @@ const BlogDetailPage = ({
         />
       </div>
 
-      <article className="max-w-4xl mx-auto px-6 py-24">
+      <article className="max-w-4xl mx-auto px-6 py-16">
         {/* ... (Back button and Share button remain same) ... */}
-        <div className="flex justify-between items-center mb-12">
+        <div className="flex justify-between items-center mb-6">
           <Link
             href="/blog"
             className="flex items-center gap-2 text-dark-tertiary hover:text-primary transition-colors group font-mono text-sm uppercase"
@@ -118,7 +118,7 @@ const BlogDetailPage = ({
           </button>
         </div>
 
-        <header className="space-y-6 mb-12">
+        <header className="space-y-6 mb-8">
           <div className="flex flex-wrap gap-2">
             {tags.map((tag: string) => (
               <span
@@ -148,7 +148,7 @@ const BlogDetailPage = ({
 
         {/* ... (Cover Image and Content remain same) ... */}
         {post.coverImage && (
-          <div className="relative aspect-video mb-16 overflow-hidden rounded-sm border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
+          <div className="relative aspect-video mb-8 overflow-hidden rounded-sm border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
             <img
               src={post.coverImage}
               alt={post.title}
@@ -164,7 +164,7 @@ const BlogDetailPage = ({
           />
         </section>
 
-        <footer className="mt-20 pt-10 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-8">
+        <footer className="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-6">
           {/* UPDATED: Pass disabled state and success callback */}
           <AppreciateButton
             id={post.id}
@@ -181,7 +181,7 @@ const BlogDetailPage = ({
 
       {/* NEW: More Articles Section */}
       {otherPosts.length > 0 && (
-        <section className="bg-left dark:bg-dark-secondary py-20 px-6">
+        <section className="bg-left dark:bg-dark-secondary py-12 px-6">
           <div className="max-w-7xl mx-auto">
             <h3 className="text-2xl font-black text-slate-900 dark:text-soft-white mb-10 uppercase tracking-tighter">
               Continue Reading_

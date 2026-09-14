@@ -29,7 +29,7 @@ const Experience = ({ data }: ExperienceProps) => {
   return (
     <section
       id="experience"
-      className="bg-white dark:bg-dark-primary py-20 px-8 md:px-14 overflow-hidden"
+      className="bg-white dark:bg-dark-primary py-12 px-8 md:px-14 overflow-hidden"
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -40,7 +40,7 @@ const Experience = ({ data }: ExperienceProps) => {
       >
         <MiniHeader title="Experiences" number={3} />
 
-        <div className="flex flex-col md:flex-row gap-8 min-h-[400px] mt-10">
+        <div className="flex flex-col md:flex-row gap-8 min-h-[400px] mt-6">
           {/* 2. Tab List with Sliding Indicator */}
           <div className="relative flex md:flex-col overflow-x-auto md:overflow-visible border-b md:border-b-0 md:border-l border-slate-200 dark:border-dark-tertiary">
             {data.map((exp, index) => (

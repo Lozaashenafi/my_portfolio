@@ -12,7 +12,7 @@ const ContactSection = async () => {
   return (
     <section
       id="contact"
-      className="bg-white dark:bg-dark-primary py-20 px-8 md:px-14 overflow-hidden"
+      className="bg-white dark:bg-dark-primary py-12 px-8 md:px-14 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto">
         {/* Header Animation */}
@@ -23,7 +23,7 @@ const ContactSection = async () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-28">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
           {/* Left Side: Staggered Info Items */}
           <ContactMotionWrapper side="left">
             <ContactItemMotion>

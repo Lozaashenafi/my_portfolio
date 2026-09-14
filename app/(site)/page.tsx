@@ -18,7 +18,7 @@ export default async function Home() {
   return (
     <>
       <Banner />
-      <AboutSection />
+      {/* <AboutSection /> */}
       <ProjectsSection />
       <OtherProjects />
       <Experience data={experienceData} />

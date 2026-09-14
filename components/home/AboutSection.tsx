@@ -40,7 +40,7 @@ const AboutSection = () => {
   return (
     <section
       id="about"
-      className="bg-white dark:bg-dark-primary py-20 px-6 md:px-12 transition-colors duration-300 overflow-hidden"
+      className="bg-white dark:bg-dark-primary py-12 px-6 md:px-12 transition-colors duration-300 overflow-hidden"
     >
       <motion.div
         initial="hidden"

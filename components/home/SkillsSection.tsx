@@ -18,7 +18,7 @@ const SkillsSection = async () => {
   return (
     <section
       id="skills"
-      className="bg-white dark:bg-dark-primary py-20 px-6 md:px-12 transition-colors duration-300 overflow-hidden"
+      className="bg-white dark:bg-dark-primary py-12 px-6 md:px-12 transition-colors duration-300 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto">
         <MiniHeader title="Skills & Tools" number={3} />

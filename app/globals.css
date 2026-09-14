@@ -9,9 +9,9 @@
 }
 
 .dark {
-  --bg: 17 24 39;
-  --text: 243 244 246;
-  --card: 31 41 55;
+  --bg: 15 23 42;
+  --text: 241 245 249;
+  --card: 30 41 59;
 }
 
 @theme {
@@ -20,17 +20,20 @@
 
   --color-primary: #b03646;
   --color-secondary: #8d2b38;
-  --color-dark-primary: #120507;
-  --color-dark-secondary: #230b0e;
-  --color-dark-tertiary: #351015;
+  --color-dark-primary: #0f172a;
+  --color-dark-secondary: #1e293b;
+  --color-dark-tertiary: #334155;
   --color-tertiary: #c05e6b;
   --color-light: #e7c3c8;
   --color-soft-white: #f7ebed;
   --color-border-light: #e5e7eb;
+  --color-pink-bg: #fce4ec;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+
+body {
+  background-color: var(--color-pink-bg);
+}
+
+.dark body {
+  background-color: #0f172a;
 }

@@ -32,10 +32,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-light dark:bg-dark-primary px-6 transition-colors duration-300">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white dark:bg-dark-primary px-6 transition-colors duration-300">
       <form
         onSubmit={handleLogin}
-        className="p-8 md:p-12 bg-white dark:bg-[#161616] border border-slate-200 dark:border-white/5 shadow-2xl flex flex-col gap-6 w-full max-w-md rounded-sm"
+        className="p-8 md:p-12 bg-white dark:bg-dark-secondary border border-slate-200 dark:border-dark-tertiary shadow-2xl flex flex-col gap-6 w-full max-w-md rounded-sm"
       >
         <div>
           <h1 className="text-4xl font-black text-slate-900 dark:text-soft-white leading-none">
@@ -58,7 +58,7 @@ export default function LoginPage() {
             <input
               type="email"
               placeholder="Email Address"
-              className="w-full bg-slate-50 dark:bg-dark-primary border border-slate-200 dark:border-white/10 p-3 pl-10 text-black dark:text-soft-white rounded-sm focus:border-primary outline-none transition-all"
+              className="w-full bg-slate-50 dark:bg-dark-primary border border-slate-200 dark:border-dark-tertiary p-3 pl-10 text-black dark:text-soft-white rounded-sm focus:border-primary outline-none transition-all"
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -69,7 +69,7 @@ export default function LoginPage() {
             <input
               type="password"
               placeholder="Password"
-              className="w-full bg-slate-50 dark:bg-dark-primary border border-slate-200 dark:border-white/10 p-3 pl-10 text-black dark:text-soft-white rounded-sm focus:border-primary outline-none transition-all"
+              className="w-full bg-slate-50 dark:bg-dark-primary border border-slate-200 dark:border-dark-tertiary p-3 pl-10 text-black dark:text-soft-white rounded-sm focus:border-primary outline-none transition-all"
               onChange={(e) => setPassword(e.target.value)}
               required
             />

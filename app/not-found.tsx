@@ -7,7 +7,7 @@ const NotFoundPage = () => {
   const router = useRouter();
 
   return (
-    <section className="bg-light dark:bg-dark-primary min-h-screen flex flex-col items-center justify-center px-6 transition-colors duration-300 relative overflow-hidden">
+    <section className="bg-white dark:bg-dark-primary min-h-screen flex flex-col items-center justify-center px-6 transition-colors duration-300 relative overflow-hidden">
       {/* Decorative Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/10 rounded-full blur-[120px] "></div>
 

@@ -18,7 +18,7 @@ const BlogSection = async () => {
   return (
     <section
       id="blog"
-      className="bg-white dark:bg-dark-primary py-20 px-6 md:px-12 transition-colors duration-300"
+      className="bg-white dark:bg-dark-primary py-12 px-6 md:px-12 transition-colors duration-300"
     >
       <div className="max-w-7xl mx-auto">
         <MiniHeader title="Blog & Insights" number={4} />
