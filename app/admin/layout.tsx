@@ -117,7 +117,7 @@ export default function AdminLayout({
                 }`}
               >
                 <span
-                  className={`${activeSection === item.section ? "text-white" : "group-hover:text-primary"} transition-colors`}
+                  className={`${currentTab === item.section ? "text-white" : "group-hover:text-primary"} transition-colors`}
                 >
                   {item.icon}
                 </span>
