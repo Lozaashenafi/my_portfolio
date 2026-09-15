@@ -78,7 +78,7 @@ const Banner = () => {
               <a href="https://github.com/Lozaashenafi" className="flex items-center gap-2 hover:text-primary transition-colors text-sm font-medium">
                 <Github size={18} /> <span className="hidden sm:inline">GitHub</span>
               </a>
-              <a href="https://www.linkedin.com/in/loza-ashenafi-773263286/" className="flex items-center gap-2 hover:text-primary transition-colors text-sm font-medium">
+              <a href="https://www.linkedin.com/in/loza-ashenafi-64647042b/" className="flex items-center gap-2 hover:text-primary transition-colors text-sm font-medium">
                 <Linkedin size={18} /> <span className="hidden sm:inline">LinkedIn</span>
               </a>
               <a href="mailto:lozaashenafi@gmail.com" className="flex items-center gap-2 hover:text-primary transition-colors text-sm font-medium">

@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
             <Github size={20} />
           </a>
           <a
-            href="https://www.linkedin.com/in/loza-ashenafi-773263286/"
+            href="https://www.linkedin.com/in/loza-ashenafi-64647042b/"
             className="hover:text-primary transition-colors"
             aria-label="LinkedIn"
           >

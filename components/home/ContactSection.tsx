@@ -75,7 +75,7 @@ const ContactSection = async () => {
                 <SocialLink
                   icon={<Linkedin size={18} />}
                   text="LinkedIn"
-                  href="https://www.linkedin.com/in/loza-ashenafi-773263286/"
+                  href="https://www.linkedin.com/in/loza-ashenafi-64647042b/"
                 />
               </ContactItemMotion>
             </div>
